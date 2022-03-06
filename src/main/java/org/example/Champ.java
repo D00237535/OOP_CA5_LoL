@@ -4,6 +4,7 @@ public class Champ {
         int id;
         String name;
         String mainRole;
+        String region;
         double winRate ;
         double pickRate;
         double banRate;
@@ -12,11 +13,12 @@ public class Champ {
         char tier;
 
 
-        public Champ(int id, String name, String mainRole, double winRate,
+        public Champ(int id, String name, String mainRole, String region, double winRate,
                      double pickRate, double banRate, int roleRank , int overAllRank, char tier) {
                 this.id = id;
                 this.name = name;
                 this.mainRole = mainRole;
+                this.region = region;
                 this.winRate = winRate;
                 this.pickRate = pickRate;
                 this.banRate = banRate;
@@ -25,6 +27,7 @@ public class Champ {
                 this.tier = tier;
 
         }
+
 
         public int getId() {
                 return id;
@@ -48,6 +51,14 @@ public class Champ {
 
         public void setMainRole(String mainRole) {
                 this.mainRole = mainRole;
+        }
+
+        public String getRegion() {
+                return region;
+        }
+
+        public void setRegion(String region) {
+                this.region = region;
         }
 
         public double getWinRate() {
@@ -98,18 +109,22 @@ public class Champ {
                 this.tier = tier;
         }
 
-//        @Override
-//        public String toString() {
-//                return "Champion{" +
-//                        "Champion Id: " + id +
-//                        ", Champion Name: " + name +
-//                        ", Champion Role: " + mainRole +
-//                        ", Champion's PickRate: " + pickRate +
-//                        ", Champion's WinRate: " + winRate +
-//                        ", Champion's BanRate: " + banRate +
-//                        ", Champion's Rank in Main Role: " + roleRank +
-//                        ", Champion's Rank OverAll: " + overAllRank +
-//                        ", Champion's Tier: " + tier +
-//                        '}';
-//        }
+
+
+
+        @Override
+        public String toString() {
+                return "Champion{" +
+                        "Champion Id: " + id +
+                        ", Champion Name: " + name +
+                        ", Champion Role: " + mainRole +
+                        ", Champion's PickRate: " + pickRate +
+                        ", Champion's WinRate: " + winRate +
+                        ", Champion's BanRate: " + banRate +
+                        ", Champion's Rank in Main Role: " + roleRank +
+                        ", Champion's Rank OverAll: " + overAllRank +
+                        ", Champion's Tier: " + tier +
+                        '}';
+        }
+
 }
