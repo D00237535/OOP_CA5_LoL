@@ -115,11 +115,11 @@ public class Champ implements Comparable<Champ> {
         @Override
         public int compareTo(Champ c)
         {
-                double currentP = (this.getWinRate());
-                double paramP = (c.getWinRate());
+                double ChampionWinRate = (this.getWinRate());
+                double cChampWinRate = (c.getWinRate());
 
                 boolean winRateComp =
-                        currentP == paramP;
+                        ChampionWinRate == cChampWinRate;
 
                 if (winRateComp)
                 {
@@ -127,7 +127,7 @@ public class Champ implements Comparable<Champ> {
                 }
                 else
                 {
-                        if (currentP - paramP > 0)
+                        if (ChampionWinRate - cChampWinRate > 0)
                         {
                                 return -1;
                         }

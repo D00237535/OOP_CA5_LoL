@@ -14,5 +14,5 @@ treemap to compare home region -  O(logN)
 switch case - PRIORITY_QUEUE_SEQUENCE_SIMULATION:
 priority queue of given champions by their win rate-  O(log N)
 
-switch case - PRIORITY_QUEUE_BRAND_STOCK:
+switch case - PRIORITY_QUEUE_TIER_PICKRATE:
 priority queue with 2 fields being pick rate and tier-  O(log N)

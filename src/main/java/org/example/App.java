@@ -60,7 +60,7 @@ public class App {
         final int HASH_MAP_RETRIEVE = 2;
         final int TREE_MAP_RETRIEVE = 3;
         final int PRIORITY_QUEUE_SEQUENCE_SIMULATION = 4;
-        final int PRIORITY_QUEUE_BRAND_STOCK = 5;
+        final int PRIORITY_QUEUE_TIER_PICKRATE = 5;
         final int EXIT = 6;
 
         Scanner keyboard = new Scanner(System.in);
@@ -116,7 +116,7 @@ public class App {
                         }
                         break;
 
-                    case PRIORITY_QUEUE_BRAND_STOCK:
+                    case PRIORITY_QUEUE_TIER_PICKRATE:
                         System.out.println("Priority queue, sorting by brand name alphabetically & pick rate, low to high");
                         twoFieldQueue.add(champList.get(0));
                         twoFieldQueue.add(champList.get(1));
