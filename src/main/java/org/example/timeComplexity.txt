@@ -1,0 +1,18 @@
+In the menu inside App.java:
+
+switch case - DISPLAY:
+By hard coding values in to an array then hardcoded a system to display the information
+in the array list- O(n)
+
+switch case - HASH_MAP_RETRIEVE:
+Asked a user to enter an ID value then have it display the information relating to that
+ID- O(1)
+
+switch case - TREE_MAP_RETRIEVE:
+treemap to compare home region -  O(logN)
+
+switch case - PRIORITY_QUEUE_SEQUENCE_SIMULATION:
+priority queue of given champions by their win rate-  O(log N)
+
+switch case - PRIORITY_QUEUE_BRAND_STOCK:
+priority queue with 2 fields being pick rate and tier-  O(log N)

@@ -12,11 +12,11 @@ public class Champ implements Comparable<Champ> {
         double banRate;
         int roleRank;
         int overAllRank;
-        char tier;
+        String tier;
 
 
         public Champ(int id, String name, String mainRole, String region, double winRate,
-                     double pickRate, double banRate, int roleRank , int overAllRank, char tier) {
+                     double pickRate, double banRate, int roleRank , int overAllRank, String tier) {
                 this.id = id;
                 this.name = name;
                 this.mainRole = mainRole;
@@ -103,11 +103,11 @@ public class Champ implements Comparable<Champ> {
                 this.overAllRank = overAllRank;
         }
 
-        public char getTier() {
+        public String getTier() {
                 return tier;
         }
 
-        public void setTier(char tier) {
+        public void setTier(String tier) {
                 this.tier = tier;
         }
 
@@ -118,10 +118,10 @@ public class Champ implements Comparable<Champ> {
                 double currentP = (this.getWinRate());
                 double paramP = (c.getWinRate());
 
-                boolean PriceSizeComp =
+                boolean winRateComp =
                         currentP == paramP;
 
-                if (PriceSizeComp)
+                if (winRateComp)
                 {
                         return 0;
                 }

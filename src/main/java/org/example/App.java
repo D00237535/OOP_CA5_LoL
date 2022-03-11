@@ -13,7 +13,11 @@ public class App {
     public static void main(String[] args) {
         App app = new App();
         app.start();
-
+        
+        Map<Integer, Champ> champHashMap;
+                                        
+        //Feature 5                     
+        Map<String, Champ> champTreeMap; 
     }
 
     public void start() {
@@ -33,6 +37,8 @@ public class App {
         //Feature 6
         PriorityQueue<Champ> champPriorityQueue = new PriorityQueue<>();
 
+        PriorityQueue<Champ> twoFieldQueue = new PriorityQueue<>(new tierPickRateComparator());
+
         initaialize(champList);
         for (Champ c : champList) {
             champHashMap.put(c.getId(), c);
@@ -46,14 +52,16 @@ public class App {
                 + "2. Hash Map Retrieve\n"
                 + "3. Tree Map Retrieve \n"
                 + "4. PriorityQueue Display\n"
-                + "5. Exit\n"
-                + "Enter Option [1,5]";
+                + "5. PriorityQueue Two-Field\n"
+                + "6. Exit\n"
+                + "Enter Option [1,6]";
 
         final int DISPLAY = 1;
         final int HASH_MAP_RETRIEVE = 2;
         final int TREE_MAP_RETRIEVE = 3;
-        final int PRIORITY_QUEUE_SEQUENCE = 4;
-        final int EXIT = 5;
+        final int PRIORITY_QUEUE_SEQUENCE_SIMULATION = 4;
+        final int PRIORITY_QUEUE_BRAND_STOCK = 5;
+        final int EXIT = 6;
 
         Scanner keyboard = new Scanner(System.in);
         int option = 0;
@@ -82,7 +90,7 @@ public class App {
                         treeRetrieve(champList);
                         break;
 
-                    case PRIORITY_QUEUE_SEQUENCE:
+                    case PRIORITY_QUEUE_SEQUENCE_SIMULATION:
 
                         System.out.println("Display Priority Queue display");
 
@@ -106,7 +114,17 @@ public class App {
                         while ( !champPriorityQueue.isEmpty() ) {
                             System.out.println(champPriorityQueue.remove());
                         }
+                        break;
 
+                    case PRIORITY_QUEUE_BRAND_STOCK:
+                        System.out.println("Priority queue, sorting by brand name alphabetically & pick rate, low to high");
+                        twoFieldQueue.add(champList.get(0));
+                        twoFieldQueue.add(champList.get(1));
+                        twoFieldQueue.add(champList.get(2));
+                        twoFieldQueue.add(champList.get(3));
+
+                        displayTwoFieldQueue(twoFieldQueue);
+                        break;
 
                     case EXIT:
 
@@ -129,25 +147,25 @@ public class App {
 
     //Feature 1 ArrayList
     private void initaialize(List list) {
-        list.add(new Champ(1, "Warwick", "Jungler", "Zuan", 50.45, 2.96, 1.47, 5, 30, 'A'));
+        list.add(new Champ(1, "Warwick", "Jungler", "Zuan", 50.45, 2.96, 1.47, 5, 30, "A"));
 
-        list.add(new Champ(2, "Skarner", "Jungler", "Shurima", 48.54, 11.2, 11.7, 34, 168, 'D'));
+        list.add(new Champ(2, "Skarner", "Jungler", "Shurima", 48.54, 11.2, 11.7, 34, 168, "D"));
 
-        list.add(new Champ(3, "Garen", "Toplane", "Demacia", 59.95, 1.68, 3.66, 11, 40, 'S'));
+        list.add(new Champ(3, "Garen", "Toplane", "Demacia", 59.95, 1.68, 3.66, 11, 40, "S"));
 
-        list.add(new Champ(4, "Karma", "TopLane", "Ionia", 52.98, 2.26, 1.08, 42, 152, 'B'));
+        list.add(new Champ(4, "Karma", "TopLane", "Ionia", 52.98, 2.26, 1.08, 42, 152, "B"));
 
-        list.add(new Champ(5, "Neeko", "MidLane", "Ixtal", 52.56, 3.83, 0.28, 37, 156, 'A'));
+        list.add(new Champ(5, "Neeko", "MidLane", "Ixtal", 52.56, 3.83, 0.28, 37, 156, "A"));
 
-        list.add(new Champ(6, "Akshan", "MidLane", "Shurima", 51.17, 3.88, 16.3, 5, 17, 'S'));
+        list.add(new Champ(6, "Akshan", "MidLane", "Shurima", 51.17, 3.88, 16.3, 5, 17, "S"));
 
-        list.add(new Champ(7, "Vayne", "BotLane", "Demacia", 52.09, 13.59, 18.0, 5, 54, 'S'));
+        list.add(new Champ(7, "Vayne", "BotLane", "Demacia", 52.09, 13.59, 18.0, 5, 54, "S"));
 
-        list.add(new Champ(8, "Draven", "BotLane", "Noxus", 49.71, 5.17, 6.87, 18, 145, 'B'));
+        list.add(new Champ(8, "Draven", "BotLane", "Noxus", 49.71, 5.17, 6.87, 18, 145, "B"));
 
-        list.add(new Champ(9, "Sona", "Support", "Demacia", 52.74, 3.52, 0.33, 4, 24, 'A'));
+        list.add(new Champ(9, "Sona", "Support", "Demacia", 52.74, 3.52, 0.33, 4, 24, "A"));
 
-        list.add(new Champ(10, "Traic", "Support", "Targon", 50.71, 0.95, 0.11, 19, 132, 'B'));
+        list.add(new Champ(10, "Traic", "Support", "Targon", 50.71, 0.95, 0.11, 19, 132, "B"));
     }
 
     public void displayAllChamps(List<Champ> champList) {
@@ -225,6 +243,10 @@ public class App {
         }
     }
 
-
-
+        public void displayTwoFieldQueue(PriorityQueue<Champ> twoFieldQueue )
+        {
+            while ( !twoFieldQueue.isEmpty() ) {
+                System.out.println(twoFieldQueue.remove());
+            }
+        }
 }
