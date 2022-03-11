@@ -1,6 +1,8 @@
 package org.example;
 
-public class Champ {
+import java.util.Comparator;
+
+public class Champ implements Comparable<Champ> {
         int id;
         String name;
         String mainRole;
@@ -110,6 +112,32 @@ public class Champ {
         }
 
 
+        @Override
+        public int compareTo(Champ c)
+        {
+                double currentP = (this.getWinRate());
+                double paramP = (c.getWinRate());
+
+                boolean PriceSizeComp =
+                        currentP == paramP;
+
+                if (PriceSizeComp)
+                {
+                        return 0;
+                }
+                else
+                {
+                        if (currentP - paramP > 0)
+                        {
+                                return -1;
+                        }
+                        else
+                        {
+                                return 1;
+                        }
+                }
+        }
+
 
 
         @Override
@@ -118,6 +146,7 @@ public class Champ {
                         "Champion Id: " + id +
                         ", Champion Name: " + name +
                         ", Champion Role: " + mainRole +
+                        ", Home Region: " + region +
                         ", Champion's PickRate: " + pickRate +
                         ", Champion's WinRate: " + winRate +
                         ", Champion's BanRate: " + banRate +

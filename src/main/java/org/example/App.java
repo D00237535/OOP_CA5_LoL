@@ -20,29 +20,40 @@ public class App {
 
         int findId;
         String findName;
+        // Feature 1
 
         List<Champ> champList = new ArrayList();
+
+        //Feature 3
         Map<Integer, Champ> champHashMap = new HashMap<>();
+
+        //Feature 5
         Map<String, Champ> champTreeMap = new TreeMap<>();
+
+        //Feature 6
+        PriorityQueue<Champ> champPriorityQueue = new PriorityQueue<>();
+
         initaialize(champList);
         for (Champ c : champList) {
             champHashMap.put(c.getId(), c);
             champTreeMap.put(c.getName(), c);
         }
 
-
+        // Feature 2 + 4
         final String MENU_ITEMS = "\n*** MAIN MENU ***\n"
 
                 + "1. Show all Champions\n"
                 + "2. Hash Map Retrieve\n"
                 + "3. Tree Map Retrieve \n"
-                + "4. Exit\n"
-                + "Enter Option [1,4]";
+                + "4. PriorityQueue Display\n"
+                + "5. Exit\n"
+                + "Enter Option [1,5]";
 
         final int DISPLAY = 1;
         final int HASH_MAP_RETRIEVE = 2;
         final int TREE_MAP_RETRIEVE = 3;
-        final int EXIT = 4;
+        final int PRIORITY_QUEUE_SEQUENCE = 4;
+        final int EXIT = 5;
 
         Scanner keyboard = new Scanner(System.in);
         int option = 0;
@@ -54,27 +65,49 @@ public class App {
                 switch (option) {
                     
                     case DISPLAY:
+
                         System.out.println("Display All Champions");
                         displayAllChamps(champList);
                         break;
 
                     case HASH_MAP_RETRIEVE:
-//                        System.out.println("Find Champion by ID");
-//                        System.out.println("Enter Champion ID: ");
-//                        findId = Integer.parseInt(keyboard.nextLine());
-//                        champHashMap.get(findId);
+
                         System.out.println("Hash Map Retrieve option chosen");
                         hashRetrieve(champList);
                         break;
 
                     case TREE_MAP_RETRIEVE:
-//                        System.out.println("Find Champion by ID");
-//                        System.out.println("Enter Champion ID: ");
-//                        findName = (keyboard.nextLine());
-//                        champTreeMap.get(findName);
+
                         System.out.println("Display using TreeMap option chosen");
                         treeRetrieve(champList);
                         break;
+
+                    case PRIORITY_QUEUE_SEQUENCE:
+
+                        System.out.println("Display Priority Queue display");
+
+                        //2 third priority
+                        champPriorityQueue.add(champList.get(0));
+                        champPriorityQueue.add(champList.get(1));
+
+                        //2 second priority
+                        champPriorityQueue.add(champList.get(2));
+                        champPriorityQueue.add(champList.get(3));
+
+                        //remove and display element
+//                        champPriorityQueue.remove();
+                        Champ champ = champPriorityQueue.remove();
+                        System.out.println(champ + "\n");
+
+                        champPriorityQueue.add(champList.get(6));
+
+                        System.out.println(champPriorityQueue.remove());
+
+                        while ( !champPriorityQueue.isEmpty() ) {
+                            System.out.println(champPriorityQueue.remove());
+                        }
+
+
                     case EXIT:
 
                         System.out.println("Exit Menu option chosen");
@@ -94,7 +127,7 @@ public class App {
 
     }
 
-
+    //Feature 1 ArrayList
     private void initaialize(List list) {
         list.add(new Champ(1, "Warwick", "Jungler", "Zuan", 50.45, 2.96, 1.47, 5, 30, 'A'));
 
@@ -102,9 +135,9 @@ public class App {
 
         list.add(new Champ(3, "Garen", "Toplane", "Demacia", 59.95, 1.68, 3.66, 11, 40, 'S'));
 
-        list.add(new Champ(4, "Illaoi", "TopLane", "Ionia", 50.97, 2.26, 1.08, 42, 152, 'B'));
+        list.add(new Champ(4, "Karma", "TopLane", "Ionia", 52.98, 2.26, 1.08, 42, 152, 'B'));
 
-        list.add(new Champ(5, "Karma", "MidLane", "Ixtal", 52.56, 3.83, 0.28, 37, 156, 'B'));
+        list.add(new Champ(5, "Neeko", "MidLane", "Ixtal", 52.56, 3.83, 0.28, 37, 156, 'A'));
 
         list.add(new Champ(6, "Akshan", "MidLane", "Shurima", 51.17, 3.88, 16.3, 5, 17, 'S'));
 
@@ -126,13 +159,13 @@ public class App {
         System.out.println("==================================================================================================================================");
 
         for (Champ champ : champList) {
-            System.out.println("\t " + champ.getId() + "\t\t" + champ.getName() + "\t\t" + champ.getMainRole() + "\t\t" + champ.getRegion() + "\t\t" + champ.getWinRate() + "\t\t" + champ.getPickRate()
-                    + "\t\t\t" + champ.getBanRate() + "\t\t" + champ.getRoleRank() + "\t\t\t\t" + champ.getOverAllRank() + "\t\t\t\t" + champ.getTier() + "\t\t\t");
+            System.out.println("\t " + champ.getId() + "\t\t" + champ.getName() + "\t\t" + champ.getMainRole() + "\t\t" + champ.getRegion() + "\t\t" + champ.getWinRate()
+                    + "\t\t" + champ.getPickRate() + "\t\t\t" + champ.getBanRate() + "\t\t" + champ.getRoleRank() + "\t\t\t\t" + champ.getOverAllRank() + "\t\t\t\t" + champ.getTier());
         }
         System.out.println("==================================================================================================================================");
     }
 
-
+    //Feature 3 Hashmap
     public static void hashRetrieve(List<Champ> champList) {
         Scanner sc = new Scanner(System.in);
         Map<Integer, Champ> map = new HashMap<>();
@@ -160,7 +193,7 @@ public class App {
 
     }
 
-
+    //Feature 5 TreeMap
     public static void treeRetrieve(List<Champ> champList) {
 
         Champion c1 = new Champion("Warwick", "Zaun");
@@ -173,9 +206,11 @@ public class App {
         for (Champ c : champList) {
             if (c.getName() == c.name) {
                 champTreeMap.put(c, c1);
-            } else if (c.getName() == c.name) {
+            }
+            else if (c.getName() == c.name) {
                 champTreeMap.put(c, c2);
-            } else {
+            }
+            else {
                 champTreeMap.put(c, c3);
             }
         }
@@ -189,4 +224,7 @@ public class App {
             System.out.println("{" + champ + "} -> " + champion);
         }
     }
+
+
+
 }
