@@ -153,15 +153,15 @@ public class App {
 
         list.add(new Champ(3, "Garen", "Toplane", "Demacia", 59.95, 1.68, 3.66, 11, 40, "S"));
 
-        list.add(new Champ(4, "Karma", "TopLane", "Ionia", 52.98, 2.26, 1.08, 42, 152, "B"));
+        list.add(new Champ(4, "Karma", "Toplane", "Ionia", 52.98, 2.26, 1.08, 42, 152, "B"));
 
-        list.add(new Champ(5, "Neeko", "MidLane", "Ixtal", 52.56, 3.83, 0.28, 37, 156, "A"));
+        list.add(new Champ(5, "Neeko", "Midlane", "Ixtal", 52.56, 3.83, 0.28, 37, 156, "A"));
 
-        list.add(new Champ(6, "Akshan", "MidLane", "Shurima", 51.17, 3.88, 16.3, 5, 17, "S"));
+        list.add(new Champ(6, "Akshan", "Midlane", "Shurima", 51.17, 3.88, 16.3, 5, 17, "S"));
 
-        list.add(new Champ(7, "Vayne", "BotLane", "Demacia", 52.09, 13.59, 18.0, 5, 54, "S"));
+        list.add(new Champ(7, "Vayne", "Botlane", "Demacia", 52.09, 13.59, 18.0, 5, 54, "S"));
 
-        list.add(new Champ(8, "Draven", "BotLane", "Noxus", 49.71, 5.17, 6.87, 18, 145, "B"));
+        list.add(new Champ(8, "Draven", "Botlane", "Noxus", 49.71, 5.17, 6.87, 18, 145, "B"));
 
         list.add(new Champ(9, "Sona", "Support", "Demacia", 52.74, 3.52, 0.33, 4, 24, "A"));
 

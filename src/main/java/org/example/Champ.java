@@ -3,6 +3,7 @@ package org.example;
 import java.util.Comparator;
 
 public class Champ implements Comparable<Champ> {
+
         int id;
         String name;
         String mainRole;
