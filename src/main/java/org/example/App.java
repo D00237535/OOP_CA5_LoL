@@ -13,11 +13,11 @@ public class App {
     public static void main(String[] args) {
         App app = new App();
         app.start();
-        
+
         Map<Integer, Champ> champHashMap;
-                                        
+
         //Feature 5                     
-        Map<String, Champ> champTreeMap; 
+        Map<String, Champ> champTreeMap;
     }
 
     public void start() {
@@ -71,7 +71,7 @@ public class App {
                 String usersInput = keyboard.nextLine();
                 option = Integer.parseInt(usersInput);
                 switch (option) {
-                    
+
                     case DISPLAY:
 
                         System.out.println("Display All Champions");
@@ -111,7 +111,7 @@ public class App {
 
                         System.out.println(champPriorityQueue.remove());
 
-                        while ( !champPriorityQueue.isEmpty() ) {
+                        while (!champPriorityQueue.isEmpty()) {
                             System.out.println(champPriorityQueue.remove());
                         }
                         break;
@@ -218,17 +218,15 @@ public class App {
         Champion c2 = new Champion("Skarner", "Shurima");
         Champion c3 = new Champion("Vayne", "Demacia");
 
-         TreeMap<Champ, Champion> champTreeMap = new TreeMap<>(new ChampionRegionComparator());
+        TreeMap<Champ, Champion> champTreeMap = new TreeMap<>(new ChampionRegionComparator());
 
 
         for (Champ c : champList) {
             if (c.getName() == c.name) {
                 champTreeMap.put(c, c1);
-            }
-            else if (c.getName() == c.name) {
+            } else if (c.getName() == c.name) {
                 champTreeMap.put(c, c2);
-            }
-            else {
+            } else {
                 champTreeMap.put(c, c3);
             }
         }
@@ -243,10 +241,9 @@ public class App {
         }
     }
 
-        public void displayTwoFieldQueue(PriorityQueue<Champ> twoFieldQueue )
-        {
-            while ( !twoFieldQueue.isEmpty() ) {
-                System.out.println(twoFieldQueue.remove());
-            }
+    public void displayTwoFieldQueue(PriorityQueue<Champ> twoFieldQueue) {
+        while (!twoFieldQueue.isEmpty()) {
+            System.out.println(twoFieldQueue.remove());
         }
+    }
 }
