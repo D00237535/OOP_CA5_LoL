@@ -1,6 +1,4 @@
-package org.example;
-
-import java.util.Comparator;
+package org.example.Main;
 
 public class Champ implements Comparable<Champ> {
 

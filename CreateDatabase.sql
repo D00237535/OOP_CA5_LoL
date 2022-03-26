@@ -1,10 +1,10 @@
-CREATE TABLE `champs`
+CREATE TABLE `champ`
 (
     `id`          varchar(255) NOT NULL,
     `name`        varchar(255) NOT NULL,
     `mainRole`    varchar(255) NOT NULL,
     `region`      varchar(255) NOT NULL,
-    `wintRate`    varchar(255) NOT NULL,
+    `winRate`    varchar(255) NOT NULL,
     `pickRate`    varchar(255) NOT NULL,
     `banRate`     varchar(255) NOT NULL,
     `roleRank`    varchar(255) NOT NULL,
@@ -16,8 +16,8 @@ CREATE TABLE `champs`
 -- Dumping data for table `champs`
 --
 
-INSERT INTO `champs` (`id`, `name`, `mainRole`, `region`, `wintRate`, `pickRate`, `banRate`, `roleRank`, `overAllRank`,
-                      `tier`)
+INSERT INTO `champ` (`id`, `name`, `mainRole`, `region`, `winRate`, `pickRate`, `banRate`, `roleRank`, `overAllRank`,
+                     `tier`)
 VALUES ('1', 'Warwick', 'Jungler', 'Zuan', '50.45', '2.96', '1.47', '5', '30', 'A'),
        ('2', 'Skarner', 'Jungler', 'Shurima', '48.54', '11.2', '11.7', '34', '168', 'D'),
        ('3', 'Garen', 'Toplane', 'Demacia', '59.95', '1.68', '3.66', '11', '40', 'S'),
