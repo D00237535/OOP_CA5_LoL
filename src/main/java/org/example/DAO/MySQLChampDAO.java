@@ -59,7 +59,7 @@ public class MySQLChampDAO extends MySqlDao implements ChampDaoInterface {
     }
 
     @Override
-    public Champ findChampByChampBan(String Champ_name, double Champ_banRate) throws DaoException {
+    public Champ findChampByChampName(String Champ_name) throws DaoException {
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -68,10 +68,9 @@ public class MySQLChampDAO extends MySqlDao implements ChampDaoInterface {
         try{
             connection = this.getConnection();
 
-            String query = "SELECT * FROM `champ` WHERE name = ? AND banRate = ?";
+            String query = "SELECT * FROM `champ` WHERE name = ?";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, Champ_name);
-            preparedStatement.setDouble(2, Champ_banRate);
 
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()){
@@ -89,7 +88,7 @@ public class MySQLChampDAO extends MySqlDao implements ChampDaoInterface {
                 champ = new Champ(id, name, mainRole, region, winRate, pickRate, banRate, roleRank, overAllRank, tier);
             }
         }catch (SQLException e){
-            throw new DaoException("findChampByChampBan() " + e.getMessage());
+            throw new DaoException("findChampByChampName() " + e.getMessage());
         } finally
         {
             try
@@ -108,7 +107,7 @@ public class MySQLChampDAO extends MySqlDao implements ChampDaoInterface {
                 }
             } catch (SQLException e)
             {
-                throw new DaoException("findChampByChampBan() " + e.getMessage());
+                throw new DaoException("findChampByChampName() " + e.getMessage());
             }
         }
         return champ;
@@ -173,5 +172,54 @@ public class MySQLChampDAO extends MySqlDao implements ChampDaoInterface {
         return champ;
     }
 
+    @Override
+    public void addChamp(int id, String name, String mainRole, String region, double winRate, double pickRate, double banRate,int roleRank, int overAllRank, String tier) throws DaoException
+    {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
+        try
+        {
+            connection = this.getConnection();
+
+            String query = "INSERT INTO champ VALUES (?,?,?,?,?,?,?,?,?,?)";
+            preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setInt(1, id);
+            preparedStatement.setString(2, name);
+            preparedStatement.setString(3, mainRole);
+            preparedStatement.setString(4, region);
+            preparedStatement.setDouble(5, winRate);
+            preparedStatement.setDouble(6, pickRate);
+            preparedStatement.setDouble(7, banRate);
+            preparedStatement.setInt(8, roleRank);
+            preparedStatement.setInt(9, overAllRank);
+            preparedStatement.setString(10, tier);
+
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e)
+        {
+            throw new DaoException("addPerfume() " + e.getMessage());
+        } finally
+        {
+            try
+            {
+                if (preparedStatement != null)
+                {
+                    preparedStatement.close();
+                }
+                if (connection != null)
+                {
+                    freeConnection(connection);
+                }
+            } catch (SQLException e)
+            {
+
+
+            }
+        }
+    }
 }

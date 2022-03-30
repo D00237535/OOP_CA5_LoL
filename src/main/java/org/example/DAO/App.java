@@ -27,7 +27,7 @@ public class App
             String name = "Warwick";
             double banRate = 1.47;
 
-            Champ champ = IChampDao.findChampByChampBan(name, banRate);
+            Champ champ = IChampDao.findChampByChampName(name);
             if(champ != null)
                 System.out.println("Champion: " + name + " was found " + champ);
             else
@@ -48,7 +48,15 @@ public class App
 
             System.out.println("\nCall: insertChamp");
             id = 11;
-            name = "";
+            name = "Veigar";
+            String mainRole = "MidLane";
+            String region = "Bandle";
+            double winRate = 51.74;
+            double pickRate = 7.9;
+            banRate = 9.7;
+            int roleRank = 11;
+            int overAllRank = 36;
+            String tier= "s";
 
             champ = IChampDao.deleteChampByID(id);
             if(champ != null)

@@ -1,6 +1,10 @@
 package org.example.Main;
 
 
+import org.example.DAO.ChampDaoInterface;
+import org.example.DAO.MySQLChampDAO;
+import org.example.Exceptions.DaoException;
+
 import java.util.*;
 
 
@@ -9,6 +13,8 @@ import java.util.*;
  */
 public class App {
     ChampManager champManager;
+    PriorityQueue<org.example.DTOs.Champ> queueDBFiltered;
+    List<org.example.DTOs.Champ> listDBFiltered;
 
     public static void main(String[] args) {
         App app = new App();
@@ -39,6 +45,7 @@ public class App {
 
         PriorityQueue<Champ> twoFieldQueue = new PriorityQueue<>(new tierPickRateComparator());
 
+
         initaialize(champList);
         for (Champ c : champList) {
             champHashMap.put(c.getId(), c);
@@ -48,20 +55,34 @@ public class App {
         // Feature 2 + 4
         final String MENU_ITEMS = "\n*** MAIN MENU ***\n"
 
-                + "1. Show all Champions\n"
+                + "1. Show All Champions\n"
                 + "2. Hash Map Retrieve\n"
                 + "3. Tree Map Retrieve \n"
                 + "4. PriorityQueue Display\n"
                 + "5. PriorityQueue Two-Field\n"
-                + "6. Exit\n"
-                + "Enter Option [1,6]";
+                + "6. Find All Champions From Database\n"
+                + "7. Find Champion By ID From Database\n"
+                + "8. Delete Champion From Database By ID\n"
+                + "9. Add Champion to database\n"
+                + "10. List Champs Filtered By Region\n"
+                + "11. Find All Champions From Database As JSON\n"
+                + "12. Find one Champion From Database By ID As JSON\n"
+                + "13. Exit\n"
+                + "Enter Option [1,13]";
 
         final int DISPLAY = 1;
         final int HASH_MAP_RETRIEVE = 2;
         final int TREE_MAP_RETRIEVE = 3;
         final int PRIORITY_QUEUE_SEQUENCE_SIMULATION = 4;
         final int PRIORITY_QUEUE_TIER_PICKRATE = 5;
-        final int EXIT = 6;
+        final int GET_ALL_CHAMPS_FROM_DB = 6;
+        final int GET_CHAMPS_FROM_DB_BY_ID = 7;
+        final int DELETE_CHAMPS_FROM_DB_BY_ID = 8;
+        final int ADD_CHAMP_TO_DB = 9;
+        final int LIST_FILTERED_CHAMPS_BY_REGION = 10;
+        final int GET_ALL_CHAMPS_FROM_DB_JSON = 11;
+        final int GET_CHAMPS_FROM_DB_BY_ID_JSON = 12;
+        final int EXIT = 13;
 
         Scanner keyboard = new Scanner(System.in);
         int option = 0;
@@ -126,6 +147,47 @@ public class App {
                         displayTwoFieldQueue(twoFieldQueue);
                         break;
 
+                    case GET_ALL_CHAMPS_FROM_DB:
+
+                        findAllChamp();
+                        break;
+
+                    case GET_CHAMPS_FROM_DB_BY_ID:
+
+                        System.out.println("Please enter Champion Name: ");
+                        String champName = keyboard.nextLine();
+                        findChampByChampName(champName);
+                        break;
+
+                    case DELETE_CHAMPS_FROM_DB_BY_ID:
+
+                        System.out.println("Please enter Champ ID: ");
+                        int DeleteId = keyboard.nextInt();
+                        deleteChampByID(DeleteId);
+                        break;
+
+                    case ADD_CHAMP_TO_DB:
+
+                        addChampToDB();
+                        break;
+
+                    case LIST_FILTERED_CHAMPS_BY_REGION:
+
+                        System.out.println("Please enter Champion: ");
+                        String filteringRegion = keyboard.nextLine();
+                        listFilteredChamp(filteringRegion);
+                        break;
+
+                    case GET_ALL_CHAMPS_FROM_DB_JSON:
+
+                        System.out.println();
+                        break;
+
+                    case GET_CHAMPS_FROM_DB_BY_ID_JSON:
+
+                        System.out.println();
+                        break;
+
                     case EXIT:
 
                         System.out.println("Exit Menu option chosen");
@@ -145,23 +207,24 @@ public class App {
 
     }
 
+
     //Feature 1 ArrayList
     private void initaialize(List list) {
         list.add(new Champ(1, "Warwick", "Jungler", "Zuan", 50.45, 2.96, 1.47, 5, 30, "A"));
 
         list.add(new Champ(2, "Skarner", "Jungler", "Shurima", 48.54, 11.2, 11.7, 34, 168, "D"));
 
-        list.add(new Champ(3, "Garen", "Toplane", "Demacia", 59.95, 1.68, 3.66, 11, 40, "S"));
+        list.add(new Champ(3, "Garen", "TopLane", "Demacia", 59.95, 1.68, 3.66, 11, 40, "S"));
 
-        list.add(new Champ(4, "Karma", "Toplane", "Ionia", 52.98, 2.26, 1.08, 42, 152, "B"));
+        list.add(new Champ(4, "Karma", "TopLane", "Ionia", 52.98, 2.26, 1.08, 42, 152, "B"));
 
-        list.add(new Champ(5, "Neeko", "Midlane", "Ixtal", 52.56, 3.83, 0.28, 37, 156, "A"));
+        list.add(new Champ(5, "Neeko", "MidLane", "Ixtal", 52.56, 3.83, 0.28, 37, 156, "A"));
 
-        list.add(new Champ(6, "Akshan", "Midlane", "Shurima", 51.17, 3.88, 16.3, 5, 17, "S"));
+        list.add(new Champ(6, "Akshan", "MidLane", "Shurima", 51.17, 3.88, 16.3, 5, 17, "S"));
 
-        list.add(new Champ(7, "Vayne", "Botlane", "Demacia", 52.09, 13.59, 18.0, 5, 54, "S"));
+        list.add(new Champ(7, "Vayne", "BotLane", "Demacia", 52.09, 13.59, 18.0, 5, 54, "S"));
 
-        list.add(new Champ(8, "Draven", "Botlane", "Noxus", 49.71, 5.17, 6.87, 18, 145, "B"));
+        list.add(new Champ(8, "Draven", "BotLane", "Noxus", 49.71, 5.17, 6.87, 18, 145, "B"));
 
         list.add(new Champ(9, "Sona", "Support", "Demacia", 52.74, 3.52, 0.33, 4, 24, "A"));
 
@@ -240,10 +303,180 @@ public class App {
             System.out.println("{" + champ + "} -> " + champion);
         }
     }
-
+    //Feature 6
     public void displayTwoFieldQueue(PriorityQueue<Champ> twoFieldQueue) {
         while (!twoFieldQueue.isEmpty()) {
             System.out.println(twoFieldQueue.remove());
+        }
+    }
+
+    //Feature 7
+    public void findAllChamp()
+    {
+        ChampDaoInterface IChampDao = new MySQLChampDAO();
+        try
+        {
+            System.out.println("\nCall findAllChamps()");
+            List<org.example.DTOs.Champ> champs = IChampDao.findAllChamp();
+
+            if( champs.isEmpty() )
+                System.out.println("There are no Champions");
+            else {
+                for (org.example.DTOs.Champ champ : champs)
+                    System.out.println(champ.toString());
+            }
+
+        }
+        catch( DaoException e )
+        {
+            e.printStackTrace();
+        }
+    }
+
+    //Feature 8
+    public void findChampByChampName(String name)
+    {
+        ChampDaoInterface IChampDao = new MySQLChampDAO();
+        try
+        {
+            System.out.println("findChampByChampName()");
+            org.example.DTOs.Champ champ = IChampDao.findChampByChampName(name);
+
+            if(champ == null)
+                System.out.println("No Champion exists with the name: " + name);
+            else {
+                System.out.println(champ);
+            }
+
+        }
+        catch( DaoException e )
+        {
+            e.printStackTrace();
+        }
+    }
+
+    //Feature 9
+    public void deleteChampByID(int id)
+    {
+        ChampDaoInterface IChampDao = new MySQLChampDAO();
+        try
+        {
+            System.out.println("deletePerfumeByID()");
+            org.example.DTOs.Champ champ = IChampDao.deleteChampByID(id);
+
+            if(champ != null)
+                if(champ != null)
+                    System.out.println("Champion: with id " + id +" was found and deleted");
+                else
+                    System.out.println("Champion: " + id + " was not found");
+            }
+        catch( DaoException e )
+        {
+            e.printStackTrace();
+        }
+    }
+
+    //Feature 10
+    public void addChampToDB()
+    {
+        ChampDaoInterface IChampDao = new MySQLChampDAO();
+
+        int id = -1;
+        String name = "";
+        String mainRole = "";
+        String region = "";
+        double winRate = -1.0;
+        double pickRate = -1.0;
+        double banRate = -1.0;
+        int roleRank = -1;
+        int overAllRank = -1;
+        String tier = "";
+        Scanner kb = new Scanner(System.in);
+
+        while(id < 1) {
+            System.out.println("Please enter a new Champion ID: ");
+            id = kb.nextInt();
+        };
+
+        while(name == "") {
+            System.out.println("Please enter Champion Name: ");
+            name = kb.nextLine();
+        };
+
+        while(mainRole == "") {
+            System.out.println("Please enter Champion mainRole: ");
+            mainRole = kb.nextLine();
+        };
+
+        while(region == "") {
+            System.out.println("Please enter Champion home region: ");
+            region = kb.nextLine();
+        };
+
+        while(winRate <= 0) {
+            System.out.println("Please enter Champion winRate: ");
+            winRate = kb.nextDouble();
+        };
+
+        while(pickRate <= 0) {
+            System.out.println("Please enter Champion pickRate: ");
+            pickRate = kb.nextDouble();
+        };
+
+        while(banRate <= 0) {
+            System.out.println("Please enter Champion banRate: ");
+            banRate = kb.nextDouble();
+        };
+
+        while(roleRank <= 0) {
+            System.out.println("Please enter Champion roleRank: ");
+            roleRank = kb.nextInt();
+        };
+
+        while(overAllRank <= 0) {
+            System.out.println("Please enter Champion overAllRank: ");
+            overAllRank = kb.nextInt();
+        };
+
+        while(tier == "") {
+            System.out.println("Please enter Champion tier");
+            tier = kb.nextLine();
+        }
+
+        try {
+            IChampDao.addChamp(id, name, mainRole, region, winRate, pickRate, banRate, roleRank, overAllRank, tier);
+            System.out.println("Added Successfully");
+        }
+        catch( DaoException e )
+        {
+            e.printStackTrace();
+        }
+
+    }
+
+    //Feature 11
+    public void listFilteredChamp(String region)
+    {
+        ChampDaoInterface IChampDao = new MySQLChampDAO();
+        System.out.println("Showing all Champions from " + region );
+
+        try {
+            listDBFiltered = IChampDao.findAllFromRegion(region);
+            ArrayList<org.example.DTOs.Champ> fetchedFilteredArrList = new ArrayList<org.example.DTOs.Champ>();
+            fetchedFilteredArrList.addAll(listDBFiltered);
+
+            for(int i = 0; i < fetchedFilteredArrList.size(); i++)
+            {
+                queueDBFiltered.add(fetchedFilteredArrList.get(i));
+            }
+            while ( !queueDBFiltered.isEmpty() ) {
+                org.example.DTOs.Champ c = queueDBFiltered.remove();
+                System.out.println();
+            }
+        }
+        catch( DaoException e )
+        {
+            e.printStackTrace();
         }
     }
 }
