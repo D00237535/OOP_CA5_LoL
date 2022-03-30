@@ -32,6 +32,31 @@ public class App
                 System.out.println("Champion: " + name + " was found " + champ);
             else
                 System.out.println("Champion: " + name + ", banRate: " + banRate + " was not found");
+
+
+            System.out.println("\nCall: deleteChampByID");
+            int id = 1;
+            name = "Warwick";
+
+            champ = IChampDao.deleteChampByID(id);
+            if(champ != null)
+                if(champ != null)
+                    System.out.println("Champion: " + name + " with id " + id +" was found and deleted");
+                else
+                    System.out.println("Champion: " + id + " was not found");
+
+
+            System.out.println("\nCall: insertChamp");
+            id = 11;
+            name = "";
+
+            champ = IChampDao.deleteChampByID(id);
+            if(champ != null)
+                if(champ != null)
+                    System.out.println("Champion: " + name + " with id " + id +" was found and deleted");
+                else
+                    System.out.println("Champion: " + id + " was not found");
+
         }
         catch( DaoException e )
         {

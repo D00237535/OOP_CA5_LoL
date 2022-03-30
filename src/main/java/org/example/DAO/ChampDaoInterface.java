@@ -10,4 +10,5 @@ public interface ChampDaoInterface {
 
     public Champ findChampByChampBan(String name, double banRate) throws org.example.Exceptions.DaoException;
 
+    Champ deleteChampByID(int id) throws org.example.Exceptions.DaoException;
 }
