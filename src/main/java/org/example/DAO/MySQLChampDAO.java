@@ -1,5 +1,7 @@
 package org.example.DAO;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.example.DTOs.Champ;
 import org.example.Exceptions.DaoException;
 
@@ -37,6 +39,7 @@ public class MySQLChampDAO extends MySqlDao implements ChampDaoInterface {
                 String tier = resultSet.getString("tier");
                 Champ c = new Champ(id, name, mainRole, region, winRate, pickRate, banRate, roleRank, overAllRank, tier);
                 champList.add(c);
+
             }
         } catch (SQLException e) {
             throw new DaoException("findAllChampResultSet()" + e.getMessage());
@@ -172,6 +175,8 @@ public class MySQLChampDAO extends MySqlDao implements ChampDaoInterface {
         return champ;
     }
 
+
+
     @Override
     public void addChamp(int id, String name, String mainRole, String region, double winRate, double pickRate, double banRate,int roleRank, int overAllRank, String tier) throws DaoException
     {
@@ -221,5 +226,74 @@ public class MySQLChampDAO extends MySqlDao implements ChampDaoInterface {
 
             }
         }
+    }
+
+    @Override
+    public List<Champ> findAllFromRegion(String region) throws DaoException {
+        return null;
+    }
+
+    @Override
+    public String findAllChampJSON() throws DaoException {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet resultSet = null;
+        List<Champ> champlist = new ArrayList<>();
+        Gson gsonParser = new GsonBuilder().setPrettyPrinting().create();
+
+        try
+        {
+            //Get connection object using the methods in the super class (MySqlDao.java)...
+            connection = this.getConnection();
+
+            String query = "SELECT * FROM champ";
+            ps = connection.prepareStatement(query);
+
+            //Using a PreparedStatement to execute SQL...
+            resultSet = ps.executeQuery();
+            while (resultSet.next())
+            {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String mainRole = resultSet.getString("mainRole");
+                String region = resultSet.getString("Region");
+                double winRate = resultSet.getDouble("winRate");
+                double pickRate = resultSet.getDouble("pickRate");
+                double banRate = resultSet.getDouble("banRate");
+                int roleRank = resultSet.getInt("RoleRank");
+                int overAllRank = resultSet.getInt("overAllRank");
+                String tier = resultSet.getString("tier");
+
+                Champ c = new Champ(id, name, mainRole, region, winRate, pickRate, banRate, roleRank, overAllRank, tier);
+                champlist.add(c);
+            }
+        } catch (SQLException e)
+        {
+            throw new DaoException("findAllChampResultSet() " + e.getMessage());
+        } finally
+        {
+            try
+            {
+                if (resultSet != null)
+                {
+                    resultSet.close();
+                }
+                if (ps != null)
+                {
+                    ps.close();
+                }
+                if (connection != null)
+                {
+                    freeConnection(connection);
+                }
+            } catch (SQLException e)
+            {
+                throw new DaoException("findAllUsers() " + e.getMessage());
+            }
+        }
+
+        String Result = gsonParser.toJson(champlist);    // Serialize an object
+
+        return Result;     // may be empty
     }
 }

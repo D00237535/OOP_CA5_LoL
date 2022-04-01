@@ -13,7 +13,10 @@ public interface ChampDaoInterface {
 
     public void addChamp(int id, String name, String mainRole, String region, double winRate, double pickRate, double banRate,int roleRank, int overAllRank, String tier) throws DaoException;
 
-//    public List<Champ> findAllFromRegion(String region) throws DaoException;
+    public List<Champ> findAllFromRegion(String region) throws DaoException;
 
     Champ deleteChampByID(int id) throws org.example.Exceptions.DaoException;
+
+    String findAllChampJSON() throws DaoException;
+
 }
