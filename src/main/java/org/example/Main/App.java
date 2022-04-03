@@ -451,8 +451,7 @@ public class App {
     }
 
     //Feature 11
-    public void listFilteredChamp()
-    {
+    public void listFilteredChamp() throws DaoException {
 
         ChampDaoInterface IChampDao = new MySQLChampDAO();
         Scanner kb = new Scanner(System.in);
@@ -462,12 +461,12 @@ public class App {
         System.out.println("Enter BanRate to filter above");
         banRate = kb.nextDouble();
 
-        List<Champ> champs = IChampDao.findChampUsingFilter(banRate, banRateComparator);     // call a method in the DAO
+        List<org.example.DTOs.Champ> champs = IChampDao.findChampUsingFilter(banRate, banRateComparator);     // call a method in the DAO
 
         if (champs.isEmpty())
             System.out.println("There are no Players");
         else {
-            for (Champ champ : champs)
+            for (org.example.DTOs.Champ champ : champs)
                 System.out.println("Champion: " + champ.toString());
         }
 
