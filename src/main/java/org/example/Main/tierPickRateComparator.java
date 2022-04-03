@@ -15,7 +15,6 @@ public class tierPickRateComparator implements Comparator<Champ> {
 
         if(brandSame)
         {
-            //so, compare based on stocklevel
             return (int) ((c1.getPickRate() - c2.getPickRate()) * -1);
         }
         else

@@ -12,7 +12,6 @@ import java.util.*;
  * Kevin Daly
  */
 public class App {
-    ChampManager champManager;
     PriorityQueue<org.example.DTOs.Champ> queueDBFiltered;
     List<org.example.DTOs.Champ> listDBFiltered;
 
@@ -64,7 +63,7 @@ public class App {
                 + "7. Find Champion By ID From Database\n"
                 + "8. Delete Champion From Database By ID\n"
                 + "9. Add Champion to database\n"
-                + "10. List Champs Filtered By Region\n"
+                + "10. List Champs Filtered By Ban Rate\n"
                 + "11. Find All Champions From Database As JSON\n"
                 + "12. Find one Champion From Database By ID As JSON\n"
                 + "13. Exit\n"
@@ -79,7 +78,7 @@ public class App {
         final int GET_CHAMPS_FROM_DB_BY_ID = 7;
         final int DELETE_CHAMPS_FROM_DB_BY_ID = 8;
         final int ADD_CHAMP_TO_DB = 9;
-        final int LIST_FILTERED_CHAMPS_BY_REGION = 10;
+        final int LIST_FILTERED_CHAMPS_BY_BAN_RATE = 10;
         final int GET_ALL_CHAMPS_FROM_DB_JSON = 11;
         final int GET_CHAMPS_FROM_DB_BY_ID_JSON = 12;
         final int EXIT = 13;
@@ -171,11 +170,9 @@ public class App {
                         addChampToDB();
                         break;
 
-                    case LIST_FILTERED_CHAMPS_BY_REGION:
+                    case LIST_FILTERED_CHAMPS_BY_BAN_RATE:
 
-                        System.out.println("Please enter Champion: ");
-                        String filteringRegion = keyboard.nextLine();
-                        listFilteredChamp(filteringRegion);
+                        listFilteredChamp();
                         break;
 
                     case GET_ALL_CHAMPS_FROM_DB_JSON:
@@ -186,8 +183,8 @@ public class App {
                     case GET_CHAMPS_FROM_DB_BY_ID_JSON:
 
                         System.out.println("Please enter Champion ID: ");
-                        int champID = keyboard.nextInt();
-//                        findChampByChampIDJSON(champID);
+                        String champID = keyboard.nextLine();
+                        findChampByIDJSON(champID);
                         break;
 
                     case EXIT:
@@ -356,7 +353,7 @@ public class App {
     public void deleteChampByID(int id) {
         ChampDaoInterface IChampDao = new MySQLChampDAO();
         try {
-            System.out.println("deletePerfumeByID()");
+            System.out.println("deleteChampionByID()");
             org.example.DTOs.Champ champ = IChampDao.deleteChampByID(id);
 
             if (champ != null)
@@ -454,37 +451,65 @@ public class App {
     }
 
     //Feature 11
-    public void listFilteredChamp(String region) {
+    public void listFilteredChamp()
+    {
+
         ChampDaoInterface IChampDao = new MySQLChampDAO();
-        System.out.println("Showing all Champions from " + region);
+        Scanner kb = new Scanner(System.in);
+        BanRateComparator banRateComparator = new BanRateComparator(SortType.Ascending);
+        double banRate;
+//todo
+        System.out.println("Enter BanRate to filter above");
+        banRate = kb.nextDouble();
 
+        List<Champ> champs = IChampDao.findChampUsingFilter(banRate, banRateComparator);     // call a method in the DAO
+
+        if (champs.isEmpty())
+            System.out.println("There are no Players");
+        else {
+            for (Champ champ : champs)
+                System.out.println("Champion: " + champ.toString());
+        }
+
+    }
+
+    //Feature 12
+    public void findAllChampJSON() throws DaoException
+    {
+        try
+        {
+            ChampDaoInterface IChampDao = new MySQLChampDAO();
+            System.out.println("\nCall findAllChampJSON()");
+            String jsonString = IChampDao.findAllChampJSON();
+
+            if(jsonString.equals("null"))
+                System.out.println("No Champions found");
+            else {
+                System.out.println(jsonString);
+            }
+        }
+        catch (DaoException e){
+            e.printStackTrace();
+        }
+
+    }
+
+
+    //Feature 13
+    public void findChampByIDJSON(String ChampID) throws DaoException {
         try {
-            listDBFiltered = IChampDao.findAllFromRegion(region);
-            ArrayList<org.example.DTOs.Champ> fetchedFilteredArrList = new ArrayList<org.example.DTOs.Champ>();
-            fetchedFilteredArrList.addAll(listDBFiltered);
+            ChampDaoInterface IChampDao = new MySQLChampDAO();
+            System.out.println("findChampionByIDJSON()");
+            String jsonString = IChampDao.findAllChampByIDJSON(ChampID);
 
-            for (int i = 0; i < fetchedFilteredArrList.size(); i++) {
-                queueDBFiltered.add(fetchedFilteredArrList.get(i));
+            if (jsonString.equals("null"))
+                System.out.println("No Champion found");
+            else {
+                System.out.println(jsonString);
             }
-            while (!queueDBFiltered.isEmpty()) {
-                org.example.DTOs.Champ c = queueDBFiltered.remove();
-                System.out.println(c.toString());
-            }
+
         } catch (DaoException e) {
             e.printStackTrace();
         }
-    }
-
-    public void findAllChampJSON() throws DaoException {
-        ChampDaoInterface IChampDao = new MySQLChampDAO();
-        System.out.println("\nCall findAllPerfumesJSON()");
-        String jsonString = IChampDao.findAllChampJSON();
-
-        if(jsonString.equals("null"))
-            System.out.println("No Champions found");
-        else {
-            System.out.println(jsonString);
-        }
-
     }
 }
