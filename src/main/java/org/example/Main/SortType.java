@@ -8,19 +8,16 @@ public enum SortType {
     private int value;
     private String description;
 
-    private SortType(int value, String description)
-    {
-        this.value =  value;
+    private SortType(int value, String description) {
+        this.value = value;
         this.description = description;
     }
 
-    public int getValue()
-    {
+    public int getValue() {
         return this.value;
     }
 
-    public String toString()
-    {
+    public String toString() {
         return this.description;
     }
 }

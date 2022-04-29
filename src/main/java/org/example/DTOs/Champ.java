@@ -1,11 +1,12 @@
 package org.example.DTOs;
+
 public class Champ {
 
     int id;
     String name;
     String mainRole;
     String region;
-    double winRate ;
+    double winRate;
     double pickRate;
     double banRate;
     int roleRank;
@@ -14,11 +15,11 @@ public class Champ {
 
 
     public Champ(int id, String name, String mainRole, String region, double winRate,
-                 double pickRate, double banRate, int roleRank , int overAllRank, String tier) {
+                 double pickRate, double banRate, int roleRank, int overAllRank, String tier) {
         this.id = id;
         this.name = name;
         this.mainRole = mainRole;
-        this.region = region;
+        this.region = this.region;
         this.winRate = winRate;
         this.pickRate = pickRate;
         this.banRate = banRate;
@@ -27,7 +28,9 @@ public class Champ {
         this.tier = tier;
 
     }
-    public Champ(){}
+
+    public Champ() {
+    }
 
 
     public int getId() {

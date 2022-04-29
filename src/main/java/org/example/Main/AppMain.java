@@ -1,6 +1,4 @@
 package org.example.Main;
-
-
 import org.example.DAO.ChampDaoInterface;
 import org.example.DAO.MySQLChampDAO;
 import org.example.Exceptions.DaoException;
@@ -11,17 +9,17 @@ import java.util.*;
 /**
  * Kevin Daly
  */
-public class App {
+public class AppMain {
     PriorityQueue<org.example.DTOs.Champ> queueDBFiltered;
     List<org.example.DTOs.Champ> listDBFiltered;
 
     public static void main(String[] args) {
-        App app = new App();
+        AppMain app = new AppMain();
         app.start();
 
         Map<Integer, Champ> champHashMap;
 
-        //Feature 5                     
+        //Feature 5
         Map<String, Champ> champTreeMap;
     }
 
@@ -172,7 +170,7 @@ public class App {
 
                     case LIST_FILTERED_CHAMPS_BY_BAN_RATE:
 
-                        listFilteredChamp();
+//                        listFilteredChamp();
                         break;
 
                     case GET_ALL_CHAMPS_FROM_DB_JSON:
@@ -450,49 +448,46 @@ public class App {
 
     }
 
-    //Feature 11
-    public void listFilteredChamp() throws DaoException {
-
-        ChampDaoInterface IChampDao = new MySQLChampDAO();
-        Scanner kb = new Scanner(System.in);
-        BanRateComparator banRateComparator = new BanRateComparator(SortType.Ascending);
-        double banRate;
-//todo
-        System.out.println("Enter BanRate to filter above");
-        banRate = kb.nextDouble();
-
-        List<org.example.DTOs.Champ> champs = IChampDao.findChampUsingFilter(banRate, banRateComparator);     // call a method in the DAO
-
-        if (champs.isEmpty())
-            System.out.println("There are no Players");
-        else {
-            for (org.example.DTOs.Champ champ : champs)
-                System.out.println("Champion: " + champ.toString());
-        }
-
-    }
+//    //Feature 11
+//    public void listFilteredChamp() throws DaoException {
+//
+//        ChampDaoInterface IChampDao = new MySQLChampDAO();
+//        Scanner kb = new Scanner(System.in);
+//        BanRateComparator banRateComparator = new BanRateComparator(SortType.Ascending);
+//        double banRate = 0.0;
+//
+//        System.out.println("Enter BanRate to filter above");
+//        banRate = kb.nextDouble();
+//
+//        List<org.example.DTOs.Champ> champs = IChampDao.findChampUsingFilter(banRate, banRateComparator);
+//        Collections.sort(champs, banRateComparator);
+//
+//        if (champs.isEmpty())
+//            System.out.println("There are no Champions with a banRate above " + banRate);
+//        else {
+//            for (org.example.DTOs.Champ champ : champs)
+//                System.out.println("Champion: " + champ.toString());
+//        }
+//
+//    }
 
     //Feature 12
-    public void findAllChampJSON() throws DaoException
-    {
-        try
-        {
+    public void findAllChampJSON() throws DaoException {
+        try {
             ChampDaoInterface IChampDao = new MySQLChampDAO();
             System.out.println("\nCall findAllChampJSON()");
             String jsonString = IChampDao.findAllChampJSON();
 
-            if(jsonString.equals("null"))
+            if (jsonString.equals("null"))
                 System.out.println("No Champions found");
             else {
                 System.out.println(jsonString);
             }
-        }
-        catch (DaoException e){
+        } catch (DaoException e) {
             e.printStackTrace();
         }
 
     }
-
 
     //Feature 13
     public void findChampByIDJSON(String ChampID) throws DaoException {
@@ -511,4 +506,5 @@ public class App {
             e.printStackTrace();
         }
     }
+
 }
